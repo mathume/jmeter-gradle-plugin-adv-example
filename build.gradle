@@ -3,17 +3,17 @@ apply plugin: 'java'
 
 buildscript {
     ext {
-        pluginsVersion = "1.3.1"
+        pluginsVersion = "1.4.0"
     }
     repositories {
-        mavenCentral()
-		mavenLocal()  // local enabled only when compiling jmeter-gradle-plugin to local maven repo
+	mavenCentral()
+	jcenter()
         maven {
-          url 'https://dl.bintray.com/jmeter-gradle-plugin/jmeter'
+          	url 'https://dl.bintray.com/jmeter-gradle-plugin/jmeter'
         }
     }
     dependencies {
-		classpath "net.foragerr.jmeter:jmeter-gradle-plugin:1.0.2-2.13-SNAPSHOT"
+	classpath "net.foragerr.jmeter:jmeter-gradle-plugin:1.0.3-2.13"
         classpath "org.codehaus.groovy:groovy-all:2.4.3"
         classpath "com.opencsv:opencsv:3.3"
         classpath "com.google.guava:guava:18.0"
@@ -26,7 +26,17 @@ buildscript {
     }
     configurations.classpath.exclude group: 'commons-math3', module: 'commons-math3'
     configurations.classpath.exclude group: 'commons-pool2', module: 'commons-pool2'
+    configurations.classpath.exclude group: 'javax.jms', module: 'jms'
+    configurations.classpath.exclude group: 'com.sun.jdmk', module: 'jmxtools'
+    configurations.classpath.exclude group: 'com.sun.jmx', module: 'jmxri'
+    configurations.all{
+	resolutionStrategy {
+		force 'xml-apis:xml-apis:1.4.01'	
+	}
+    }
 }
+
+
 
 jmeter {
     //jmTestFiles = [file("src/test/jmeter/test2.jmx")]
